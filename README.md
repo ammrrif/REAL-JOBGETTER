@@ -4,10 +4,6 @@ A prototype SaaS-style web app: upload a resume, paste a job description, and ge
 AI-style match analysis — score, strengths, missing skills, weaknesses, improvements,
 certifications, and mock interview questions.
 
-**No real AI, no database, no auth.** The `/api/analyze` endpoint runs deterministic,
-keyword-based logic (`server/src/services/aiService.ts`) that compares resume text against
-a job description to produce a realistic-looking analysis.
-
 ## Tech Stack
 
 - **Client:** React + Vite + TypeScript + Tailwind CSS + React Router
