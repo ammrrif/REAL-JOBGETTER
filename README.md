@@ -4,10 +4,6 @@ A prototype SaaS-style web app: upload a resume, paste a job description, and ge
 AI-style match analysis — score, strengths, missing skills, weaknesses, improvements,
 certifications, and mock interview questions.
 
-**No real AI, no database, no auth.** The `/api/analyze` endpoint runs deterministic,
-keyword-based logic (`server/src/services/aiService.ts`) that compares resume text against
-a job description to produce a realistic-looking analysis.
-
 ## Tech Stack
 
 - **Client:** React + Vite + TypeScript + Tailwind CSS + React Router
@@ -34,7 +30,8 @@ This builds two containers — the Express API (port 5001) and the React app ser
 
 ### Prerequisites
 
-- **Node.js 20.19+ or 22.12+** (required by Vite 8 — check with `node -v`).
+- **Node.js 20.19+ or 22.12+** (required by Vite 8 — check with `node -v`). No database, no
+  API keys, no `.env` file needed for now since it is just a prototype and showing our idea.
 
 ### Getting Started
 
