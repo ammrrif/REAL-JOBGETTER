@@ -12,7 +12,7 @@ certifications, and mock interview questions.
 ## Prerequisites
 
 - **Node.js 20.19+ or 22.12+** (required by Vite 8 — check with `node -v`). No database, no
-  API keys, no `.env` file needed.
+  API keys, no `.env` file needed for now since it is just a prototype and showing our idea.
 
 ## Getting Started
 
