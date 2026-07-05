@@ -5,9 +5,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Upload from "./pages/Upload";
-import Results from "./pages/Results";
-import Interview from "./pages/Interview";
+import ScreenCandidate from "./pages/ScreenCandidate";
+import HiringReport from "./pages/HiringReport";
+import InterviewKit from "./pages/InterviewKit";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
@@ -22,7 +23,7 @@ export default function App() {
             path="/upload"
             element={
               <ProtectedRoute>
-                <Upload />
+                <ScreenCandidate />
               </ProtectedRoute>
             }
           />
@@ -30,15 +31,23 @@ export default function App() {
             path="/results"
             element={
               <ProtectedRoute>
-                <Results />
+                <HiringReport />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/interview"
+            path="/interview-kit"
             element={
               <ProtectedRoute>
-                <Interview />
+                <InterviewKit />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
               </ProtectedRoute>
             }
           />

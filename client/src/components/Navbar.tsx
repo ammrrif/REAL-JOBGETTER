@@ -33,10 +33,18 @@ export default function Navbar() {
           {isAuthenticated ? (
             <>
               <Link
+                to="/dashboard"
+                className={`hidden text-sm font-medium sm:block ${
+                  location.pathname === "/dashboard" ? "text-indigo-600" : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                Dashboard
+              </Link>
+              <Link
                 to="/upload"
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition-colors hover:bg-indigo-500"
               >
-                Analyze Resume
+                Screen a Candidate
               </Link>
               <div className="hidden items-center gap-3 sm:flex">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
@@ -58,13 +66,13 @@ export default function Navbar() {
                   location.pathname === "/login" ? "text-indigo-600" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Log In
+                HR Login
               </Link>
               <Link
                 to="/signup"
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition-colors hover:bg-indigo-500"
               >
-                Sign Up
+                HR Portal Access
               </Link>
             </>
           )}

@@ -23,8 +23,8 @@ interface AuthContextValue {
   logout: () => void;
 }
 
-const USERS_KEY = "aijobgetter_users";
-const SESSION_KEY = "aijobgetter_session";
+const USERS_KEY = "hiring_assistant_users";
+const SESSION_KEY = "hiring_assistant_session";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 

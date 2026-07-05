@@ -9,6 +9,13 @@ export interface SkillMatch {
   found: boolean;
 }
 
+export type InterviewQuestionCategory = "Technical" | "Behavioral" | "Skill-Gap";
+
+export interface InterviewQuestionItem {
+  category: InterviewQuestionCategory;
+  question: string;
+}
+
 export interface AnalysisResult {
   matchScore: number;
   summary: string;
@@ -17,7 +24,7 @@ export interface AnalysisResult {
   weaknesses: string[];
   improvements: string[];
   certifications: string[];
-  interviewQuestions: string[];
+  interviewQuestions: InterviewQuestionItem[];
   matchedKeywords: string[];
   keywordCoverage: {
     total: number;

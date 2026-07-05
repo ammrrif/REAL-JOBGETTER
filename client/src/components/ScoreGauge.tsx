@@ -6,9 +6,9 @@ interface ScoreGaugeProps {
 }
 
 function getScoreColor(score: number): { stroke: string; text: string; label: string } {
-  if (score >= 80) return { stroke: "#059669", text: "text-emerald-600", label: "Strong Match" };
-  if (score >= 55) return { stroke: "#d97706", text: "text-amber-600", label: "Moderate Match" };
-  return { stroke: "#e11d48", text: "text-rose-600", label: "Weak Match" };
+  if (score >= 80) return { stroke: "#059669", text: "text-emerald-600", label: "Strong Fit" };
+  if (score >= 60) return { stroke: "#d97706", text: "text-amber-600", label: "Moderate Fit" };
+  return { stroke: "#e11d48", text: "text-rose-600", label: "Weak Fit" };
 }
 
 export default function ScoreGauge({ score, size = 176 }: ScoreGaugeProps) {

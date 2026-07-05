@@ -5,8 +5,8 @@ import { useAuth } from "../context/AuthContext";
 
 const FEATURES = [
   {
-    title: "Instant Match Score",
-    description: "Get a 0-100 compatibility score between your resume and any job description in seconds.",
+    title: "Instant Hiring Match Score",
+    description: "Get a 0-100 hiring match score between any candidate and your job opening in seconds.",
     accent: "indigo" as const,
     icon: (
       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -15,8 +15,8 @@ const FEATURES = [
     ),
   },
   {
-    title: "Skill Gap Detection",
-    description: "See exactly which required skills and keywords are missing from your resume.",
+    title: "Hiring Risk Detection",
+    description: "See exactly which required skills and qualifications are missing before you make an offer.",
     accent: "rose" as const,
     icon: (
       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,8 +30,8 @@ const FEATURES = [
     ),
   },
   {
-    title: "Actionable Improvements",
-    description: "Receive concrete suggestions to strengthen your resume for this specific role.",
+    title: "Candidate Ranking",
+    description: "Screen multiple candidates and see them ranked side-by-side on your talent screening dashboard.",
     accent: "emerald" as const,
     icon: (
       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,8 +40,8 @@ const FEATURES = [
     ),
   },
   {
-    title: "Mock Interview Prep",
-    description: "Practice with 8-10 tailored interview questions generated from the job and your background.",
+    title: "Interview Kit Generator",
+    description: "Generate categorized technical, behavioral, and skill-gap interview questions for any candidate.",
     accent: "amber" as const,
     icon: (
       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,10 +57,10 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  { step: "01", title: "Create your account", description: "Sign up in seconds — no credit card, just your name and email." },
-  { step: "02", title: "Upload & paste the job", description: "Drop in your resume and the job description you're targeting." },
-  { step: "03", title: "Get instant AI insights", description: "View your match score, strengths, and skill gaps in one clean report." },
-  { step: "04", title: "Practice your interview", description: "Move into a dedicated mock interview stage built from your results." },
+  { step: "01", title: "Get HR portal access", description: "Log in to the HR portal in seconds — no credit card needed." },
+  { step: "02", title: "Add the job opening", description: "Paste the job requirements you're hiring for, plus a candidate's resume." },
+  { step: "03", title: "Get instant hiring insights", description: "View the hiring match score, candidate strengths, and hiring risks in one report." },
+  { step: "04", title: "Generate the interview kit", description: "Move into a categorized interview kit built from the candidate's profile." },
 ];
 
 export default function Home() {
@@ -74,19 +74,19 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pt-28">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-1.5 text-xs font-semibold text-indigo-700">
-              ✨ AI-Powered Resume Analysis
+              ✨ AI Hiring Assistant for HR Teams
             </span>
             <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-              Land your next job with a resume that actually matches
+              Screen candidates smarter with your AI Hiring Assistant
             </h1>
             <p className="mt-5 text-lg text-slate-600">
-              Create a free account, upload your resume, and get an instant AI-style breakdown of your match score,
-              skill gaps, and a guided interview practice stage — all in under a minute.
+              Add a job opening and a candidate's resume to get an instant hiring match score, a hiring
+              risk breakdown, and a ready-to-use interview kit — built for HR teams who need to move fast.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to={primaryCtaTarget}>
                 <Button className="w-full sm:w-auto">
-                  {isAuthenticated ? "Analyze My Resume" : "Get Started Free"}
+                  {isAuthenticated ? "Screen a Candidate" : "Get HR Portal Access"}
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
@@ -94,7 +94,7 @@ export default function Home() {
               </Link>
               {!isAuthenticated && (
                 <Link to="/login" className="text-sm font-medium text-slate-500 hover:text-slate-700">
-                  Already have an account? <span className="text-indigo-600">Log in</span>
+                  Already have HR access? <span className="text-indigo-600">Log in</span>
                 </Link>
               )}
             </div>
@@ -104,8 +104,8 @@ export default function Home() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-slate-900">Everything you need to apply with confidence</h2>
-          <p className="mt-3 text-slate-600">Built to give you the same signal recruiters and ATS systems look for.</p>
+          <h2 className="text-3xl font-bold text-slate-900">Everything your team needs to screen with confidence</h2>
+          <p className="mt-3 text-slate-600">Built to give HR teams the same signal an ATS looks for, in one dashboard.</p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature) => (
@@ -120,7 +120,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="text-3xl font-bold text-white">How it works</h2>
-            <p className="mt-3 text-slate-400">Four simple steps between you and your next interview.</p>
+            <p className="mt-3 text-slate-400">Four simple steps between a resume and a hiring decision.</p>
           </div>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s) => (
@@ -135,11 +135,11 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold text-slate-900">Ready to see your match score?</h2>
-        <p className="mt-3 text-slate-600">Create your free account — it takes less than a minute.</p>
+        <h2 className="text-3xl font-bold text-slate-900">Ready to screen your first candidate?</h2>
+        <p className="mt-3 text-slate-600">Create your free HR account — it takes less than a minute.</p>
         <div className="mt-8">
           <Link to={primaryCtaTarget}>
-            <Button>{isAuthenticated ? "Analyze My Resume" : "Get Started Free"}</Button>
+            <Button>{isAuthenticated ? "Screen a Candidate" : "Get HR Portal Access"}</Button>
           </Link>
         </div>
       </section>

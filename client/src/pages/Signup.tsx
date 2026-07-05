@@ -47,12 +47,12 @@ export default function Signup() {
       return;
     }
 
-    showToast(`Welcome, ${name.trim().split(" ")[0]}! Your account is ready.`, "success");
+    showToast(`Welcome, ${name.trim().split(" ")[0]}! Your HR account is ready.`, "success");
     navigate("/upload", { replace: true });
   }
 
   return (
-    <AuthLayout title="Create your free account" subtitle="Sign up in seconds to start analyzing your resume.">
+    <AuthLayout title="Get HR Portal Access" subtitle="Create your HR account in seconds to start screening candidates.">
       <form className="space-y-4" onSubmit={handleSubmit} noValidate>
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-500" htmlFor="signup-name">
@@ -72,14 +72,14 @@ export default function Signup() {
 
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-500" htmlFor="signup-email">
-            Email
+            Work email
           </label>
           <input
             id="signup-email"
             type="email"
             autoComplete="email"
             className={INPUT_CLASSES}
-            placeholder="you@example.com"
+            placeholder="you@company.com"
             value={email}
             disabled={isSubmitting}
             onChange={(e) => setEmail(e.target.value)}
@@ -122,12 +122,12 @@ export default function Signup() {
         {error && <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>}
 
         <Button type="submit" disabled={isSubmitting} className="w-full">
-          {isSubmitting ? "Creating account..." : "Create Account"}
+          {isSubmitting ? "Creating account..." : "Create HR Account"}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-600">
-        Already have an account?{" "}
+        Already have portal access?{" "}
         <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
           Log in
         </Link>

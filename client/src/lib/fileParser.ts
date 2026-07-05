@@ -54,7 +54,7 @@ export async function extractResumeText(file: File): Promise<string> {
 
   if (!text || text.trim().length < 20) {
     throw new FileValidationError(
-      "We couldn't extract enough readable text from this file. Try a different file or paste your resume as text."
+      "We couldn't extract enough readable text from this file. Try a different file or paste the resume as text."
     );
   }
 

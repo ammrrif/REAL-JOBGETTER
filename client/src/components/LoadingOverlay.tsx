@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const STEPS = [
-  "Reading your resume...",
-  "Scanning job description keywords...",
+  "Reading the candidate's profile...",
+  "Scanning job opening requirements...",
   "Comparing skills and experience...",
-  "Generating personalized insights...",
+  "Generating hiring insights...",
 ];
 
 export default function LoadingOverlay() {
@@ -30,7 +30,7 @@ export default function LoadingOverlay() {
           </span>
         </div>
 
-        <h3 className="text-lg font-semibold text-slate-900">Analyzing your resume</h3>
+        <h3 className="text-lg font-semibold text-slate-900">Screening this candidate</h3>
         <p className="mt-2 min-h-[20px] text-sm text-slate-500">{STEPS[stepIndex]}</p>
 
         <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">

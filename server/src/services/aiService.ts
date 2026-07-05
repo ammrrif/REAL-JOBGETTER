@@ -1,4 +1,4 @@
-import { AnalysisResult } from "../types";
+import { AnalysisResult, InterviewQuestionItem } from "../types";
 
 // A broad skills dictionary spanning common tech + business domains.
 // Keyword-based matching against this list is what drives the "intelligence"
@@ -48,8 +48,8 @@ const CERTIFICATION_LIBRARY: Record<string, string[]> = {
 };
 
 const GENERIC_CERTIFICATIONS = [
-  "Relevant industry certification aligned with the target role",
-  "LinkedIn Learning course covering the top missing skill areas",
+  "Relevant industry certification aligned with this job opening",
+  "LinkedIn Learning course covering the top skill gaps",
 ];
 
 const INTERVIEW_QUESTION_BANK = {
@@ -99,24 +99,28 @@ function pickCertifications(missingSkills: string[]): string[] {
   return Array.from(certs).slice(0, 5);
 }
 
-function buildInterviewQuestions(strengths: string[], missingSkills: string[]): string[] {
-  const questions: string[] = [];
+function buildInterviewQuestions(strengths: string[], missingSkills: string[]): InterviewQuestionItem[] {
+  const questions: InterviewQuestionItem[] = [];
 
   // Lead with 2-3 behavioral questions
-  questions.push(...INTERVIEW_QUESTION_BANK.behavioral.slice(0, 3));
+  INTERVIEW_QUESTION_BANK.behavioral.slice(0, 3).forEach((question) => {
+    questions.push({ category: "Behavioral", question });
+  });
 
-  // Add role-specific questions built from the candidate's top matched strengths
+  // Add technical questions probing the candidate's top matched strengths
   strengths.slice(0, 3).forEach((skill) => {
-    questions.push(INTERVIEW_QUESTION_BANK.roleSpecificTemplate(skill));
+    questions.push({ category: "Technical", question: INTERVIEW_QUESTION_BANK.roleSpecificTemplate(skill) });
   });
 
-  // Add gap-probing questions from missing skills
+  // Add skill-gap questions probing missing requirements
   missingSkills.slice(0, 3).forEach((skill) => {
-    questions.push(INTERVIEW_QUESTION_BANK.gapTemplate(skill));
+    questions.push({ category: "Skill-Gap", question: INTERVIEW_QUESTION_BANK.gapTemplate(skill) });
   });
 
-  // Close out with 1-2 closing questions
-  questions.push(...INTERVIEW_QUESTION_BANK.closing.slice(0, 2));
+  // Close out with 1-2 closing behavioral questions
+  INTERVIEW_QUESTION_BANK.closing.slice(0, 2).forEach((question) => {
+    questions.push({ category: "Behavioral", question });
+  });
 
   return questions.slice(0, 10);
 }
@@ -142,19 +146,19 @@ function buildStrengths(matchedSkills: string[], resumeText: string): string[] {
   const strengths: string[] = [];
 
   matchedSkills.slice(0, 6).forEach((skill) => {
-    strengths.push(`Demonstrated experience with ${skill}, directly relevant to this role`);
+    strengths.push(`Demonstrated experience with ${skill}, directly relevant to this job opening`);
   });
 
   if (/\d+%|\$\d|\d+x|increased|reduced|improved|grew|saved/i.test(resumeText)) {
-    strengths.push("Resume includes quantifiable achievements, which strengthens credibility with recruiters");
+    strengths.push("Profile includes quantifiable achievements, which strengthens confidence in this candidate's track record");
   }
 
   if (/lead|led|managed|mentored|supervised/i.test(resumeText)) {
-    strengths.push("Shows leadership or mentorship experience, a strong differentiator for senior roles");
+    strengths.push("Shows leadership or mentorship experience — a strong signal for senior hires");
   }
 
   if (strengths.length === 0) {
-    strengths.push("Resume is readable and clearly structured, providing a solid base to build on");
+    strengths.push("Profile is readable and clearly structured, providing a solid base for evaluation");
   }
 
   return strengths.slice(0, 8);
@@ -165,26 +169,26 @@ function buildWeaknesses(missingSkills: string[], resumeText: string, matchPerce
 
   if (missingSkills.length > 0) {
     weaknesses.push(
-      `Missing ${missingSkills.length} keyword${missingSkills.length > 1 ? "s" : ""} the job description emphasizes: ${missingSkills
+      `Missing ${missingSkills.length} requirement${missingSkills.length > 1 ? "s" : ""} this job opening emphasizes: ${missingSkills
         .slice(0, 5)
         .join(", ")}`
     );
   }
 
   if (!/\d+%|\$\d|\d+x|increased|reduced|improved|grew|saved/i.test(resumeText)) {
-    weaknesses.push("Lacks quantifiable metrics (numbers, percentages, dollar amounts) to prove impact");
+    weaknesses.push("Lacks quantifiable metrics (numbers, percentages, dollar amounts) to demonstrate impact");
   }
 
   if (resumeText.trim().split(/\s+/).length < 150) {
-    weaknesses.push("Resume content is relatively thin — consider adding more detail on responsibilities and outcomes");
+    weaknesses.push("Profile content is relatively thin, offering limited visibility into responsibilities and outcomes");
   }
 
   if (matchPercentage < 40) {
-    weaknesses.push("Overall keyword overlap with the job description is low, which may hurt ATS screening");
+    weaknesses.push("Overall requirement overlap with this job opening is low, which may indicate a weaker fit");
   }
 
   if (weaknesses.length === 0) {
-    weaknesses.push("No major gaps detected — focus on tailoring language to match this specific posting");
+    weaknesses.push("No major gaps detected against this job opening's stated requirements");
   }
 
   return weaknesses.slice(0, 6);
@@ -195,16 +199,16 @@ function buildImprovements(missingSkills: string[], weaknesses: string[]): strin
 
   if (missingSkills.length > 0) {
     improvements.push(
-      `Add specific examples or projects that demonstrate ${missingSkills.slice(0, 3).join(", ")} if you have exposure to them`
+      `Probe for specific examples or projects demonstrating ${missingSkills.slice(0, 3).join(", ")} during the interview`
     );
   }
 
-  improvements.push("Quantify achievements with numbers (e.g., % improvement, revenue impact, time saved)");
-  improvements.push("Mirror key phrases from the job description to improve ATS keyword matching");
-  improvements.push("Trim unrelated experience and prioritize the most relevant roles near the top");
+  improvements.push("Ask the candidate to quantify past achievements (e.g., % improvement, revenue impact, time saved)");
+  improvements.push("Confirm alignment on the key responsibilities called out in this job opening");
+  improvements.push("Clarify how prior, less-related experience translates to this role during screening");
 
   if (weaknesses.some((w) => w.includes("thin"))) {
-    improvements.push("Expand each bullet point with the action taken, the tool used, and the measurable result");
+    improvements.push("Request more detail on the actions taken, tools used, and measurable results for key projects");
   }
 
   return Array.from(new Set(improvements)).slice(0, 6);
@@ -235,11 +239,14 @@ export function analyzeResume(resumeText: string, jobDescription: string): Analy
 
   let summary: string;
   if (matchScore >= 80) {
-    summary = "Strong match — your resume aligns closely with this job description. Minor tweaks could push it even further.";
-  } else if (matchScore >= 55) {
-    summary = "Moderate match — you have relevant experience, but closing a few keyword and skill gaps would meaningfully improve your chances.";
+    summary =
+      "Strong hiring match — this candidate's profile aligns closely with the job opening's requirements. A strong candidate to move forward in the process.";
+  } else if (matchScore >= 60) {
+    summary =
+      "Moderate hiring match — the candidate has relevant experience, but a few requirement gaps are worth probing further before deciding.";
   } else {
-    summary = "Weak match — significant gaps exist between your resume and this job description. Consider tailoring your resume before applying.";
+    summary =
+      "Weak hiring match — significant gaps exist between this candidate's profile and the job opening's requirements. Proceed with caution or consider other candidates.";
   }
 
   return {

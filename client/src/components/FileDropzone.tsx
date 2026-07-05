@@ -63,7 +63,7 @@ export default function FileDropzone({ onFileSelected, selectedFileName, disable
         </>
       ) : (
         <>
-          <p className="text-sm font-semibold text-slate-900">Drag & drop your resume here</p>
+          <p className="text-sm font-semibold text-slate-900">Drag & drop the candidate's resume here</p>
           <p className="mt-1 text-xs text-slate-500">or click to browse — PDF or TXT, up to 8MB</p>
         </>
       )}

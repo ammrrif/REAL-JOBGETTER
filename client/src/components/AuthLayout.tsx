@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import Logo from "./Logo";
 
 const HIGHLIGHTS = [
-  "Instant match score between your resume and any job",
-  "Skill gap detection with actionable improvements",
-  "A dedicated mock interview practice stage",
+  "Instant hiring match score for every candidate",
+  "Automatic hiring risk detection against job requirements",
+  "A ready-to-use interview kit for every screening",
 ];
 
 export default function AuthLayout({
@@ -26,7 +26,7 @@ export default function AuthLayout({
           <Logo variant="light" className="relative" />
 
           <div className="relative">
-            <h2 className="text-2xl font-bold leading-snug">Land your next job with a resume that actually matches.</h2>
+            <h2 className="text-2xl font-bold leading-snug">Screen candidates smarter with your AI Hiring Assistant.</h2>
             <ul className="mt-6 space-y-3">
               {HIGHLIGHTS.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm text-indigo-50">
@@ -39,7 +39,7 @@ export default function AuthLayout({
             </ul>
           </div>
 
-          <p className="relative text-xs text-indigo-100/80">All analysis is simulated for demo purposes.</p>
+          <p className="relative text-xs text-indigo-100/80">All hiring insights are simulated for demo purposes.</p>
         </div>
 
         <div className="p-8 sm:p-10">

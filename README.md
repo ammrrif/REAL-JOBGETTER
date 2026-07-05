@@ -1,15 +1,18 @@
-# AI JobGetter
+# AI Hiring Assistant
 
-A prototype SaaS-style web app: upload a resume, paste a job description, and get an instant
-AI-style match analysis — score, strengths, missing skills, weaknesses, improvements,
-certifications, and mock interview questions.
+A prototype SaaS-style web app for HR teams: save a job opening once, screen any number of
+candidates against it, and get an instant AI-style hiring report — hiring match score, candidate
+strengths, hiring risks, development areas, suggested training, and a categorized, flashcard-style
+interview kit — plus a talent screening dashboard that ranks every candidate you've screened,
+filterable by job opening.
 
 ## Tech Stack
 
 - **Client:** React + Vite + TypeScript + Tailwind CSS + React Router
 - **Server:** Node.js + Express + TypeScript
 
-No database, no API keys, no `.env` file needed either way.
+No database, no API keys, no `.env` file needed either way. HR accounts and the candidate roster
+are mocked in the browser's `localStorage` — this is a prototype, not a production ATS.
 
 ## Option A: Run with Docker (recommended for judges)
 
@@ -65,21 +68,45 @@ docker-compose.yml    Orchestrates the client + server containers
 client/               React + Vite + TS frontend
   Dockerfile           Multi-stage build -> served by nginx
   nginx.conf           Serves the SPA, proxies /api to the server container
-  src/pages/           Home, Upload, Results
-  src/components/      Navbar, Footer, Button, Card, ScoreGauge, FileDropzone, LoadingOverlay
-  src/lib/             api.ts (fetch client), fileParser.ts (PDF/TXT text extraction)
+  src/pages/           Home, Login, Signup, ScreenCandidate, HiringReport, InterviewKit, Dashboard
+  src/components/      Navbar, Footer, Logo, AuthLayout, ProtectedRoute, Button, Card,
+                       ScoreGauge, FileDropzone, LoadingOverlay
+  src/context/         AuthContext (mock HR auth), ToastContext (notifications)
+  src/lib/             api.ts (fetch client), fileParser.ts (PDF/TXT text extraction),
+                       candidateStore.ts (localStorage candidate roster + hiring decision logic),
+                       jobOpeningStore.ts (localStorage reusable job openings),
+                       linkedin.ts (LinkedIn people-search link builder)
 
 server/               Node + Express + TS backend
   Dockerfile           Multi-stage build -> runs compiled dist/index.js
   src/routes/          analyzeRoutes.ts -> POST /api/analyze
   src/controllers/     analyzeController.ts
-  src/services/        aiService.ts (mock AI analysis logic)
+  src/services/        aiService.ts (mock AI screening logic)
   src/types/           shared request/response types
 ```
 
 ## Flow
 
-Home → Upload (resume + job description) → Analyze → Results (score, insights, interview questions)
+Home → HR Login / Portal Access → Screen a Candidate (select a saved Job Opening or create a new
+one → Candidate Profile → Review) → Hiring Report (score, hire/maybe/reject recommendation,
+risks, shortlist, LinkedIn search shortcut) → Interview Kit Generator (flashcard-style,
+categorized Technical/Behavioral/Skill-Gap questions, no typing required) → Talent Screening
+Dashboard (all screened candidates, ranked and filterable by job opening)
+
+Job Openings are saved the first time you screen a candidate against them, so screening a second
+or third candidate for the same role is just a couple of clicks — no re-pasting the requirements.
+
+### What's real vs. simulated
+
+- **Real:** the client/server architecture, routing and auth-gating, and PDF/TXT resume text
+  extraction (via `pdfjs-dist`, actually reading the file's text layer in-browser).
+- **Simulated:** HR accounts, the candidate roster, and job openings (all mocked in
+  `localStorage`, no real backend auth or database), and the "AI" screening itself — a
+  deterministic keyword-matching engine (`server/src/services/aiService.ts`), not a call to a
+  real LLM.
+- **External links:** the "Search on LinkedIn" shortcuts open LinkedIn's public people-search in
+  a new tab, pre-filled with the candidate's name — the app never fetches, scrapes, or stores any
+  LinkedIn data.
 
 ## Troubleshooting
 

@@ -1,7 +1,7 @@
 {
   "name": "ai-jobgetter-server",
   "version": "1.0.0",
-  "description": "AI JobGetter backend - mock AI resume analysis API",
+  "description": "AI Hiring Assistant backend - mock AI candidate screening API",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/index.ts",

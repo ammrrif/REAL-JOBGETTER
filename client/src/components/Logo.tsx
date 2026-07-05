@@ -22,7 +22,7 @@ export default function Logo({ variant = "default", className = "" }: LogoProps)
         </svg>
       </span>
       <span className={`text-lg font-bold tracking-tight ${isLight ? "text-white" : "text-slate-900"}`}>
-        Job<span className={isLight ? "text-indigo-100" : "text-indigo-600"}>Getter</span>
+        Hiring<span className={isLight ? "text-indigo-100" : "text-indigo-600"}>Assistant</span>
       </span>
     </Link>
   );

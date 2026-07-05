@@ -2,7 +2,7 @@
   "name": "ai-jobgetter",
   "version": "1.0.0",
   "private": true,
-  "description": "AI JobGetter - resume/job match analysis prototype (mock AI, no database, no auth)",
+  "description": "AI Hiring Assistant - HR candidate screening prototype (mock AI, no database, mock auth)",
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },

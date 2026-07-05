@@ -45,7 +45,7 @@ export default function Login() {
   }
 
   return (
-    <AuthLayout title="Log in to your account" subtitle="Pick up right where you left off.">
+    <AuthLayout title="HR Login" subtitle="Access your talent screening dashboard.">
       <form className="space-y-4" onSubmit={handleSubmit} noValidate>
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-500" htmlFor="login-email">
@@ -56,7 +56,7 @@ export default function Login() {
             type="email"
             autoComplete="email"
             className={INPUT_CLASSES}
-            placeholder="you@example.com"
+            placeholder="you@company.com"
             value={email}
             disabled={isSubmitting}
             onChange={(e) => setEmail(e.target.value)}
@@ -87,9 +87,9 @@ export default function Login() {
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-600">
-        Don&apos;t have an account?{" "}
+        Need HR portal access?{" "}
         <Link to="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
-          Sign up for free
+          Request access
         </Link>
       </p>
     </AuthLayout>
