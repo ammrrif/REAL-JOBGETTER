@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import ScoreGauge from "../components/ScoreGauge";
@@ -44,6 +44,7 @@ function ListCard({
 
 export default function Results() {
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as ResultsLocationState | null;
 
   if (!state?.result) {
@@ -158,40 +159,36 @@ export default function Results() {
         />
       </div>
 
-      <div className="mt-6">
-        <Card
-          title="Mock Interview Questions"
-          accent="indigo"
-          icon={
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.8}
-                d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
-              />
-            </svg>
+      <div className="mt-6 flex flex-col items-center justify-between gap-5 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-600 to-violet-700 p-8 text-center shadow-sm sm:flex-row sm:text-left">
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-indigo-50">
+            Next Stage
+          </span>
+          <h2 className="mt-3 text-xl font-bold text-white">Ready to practice out loud?</h2>
+          <p className="mt-1.5 text-sm text-indigo-100">
+            Step into a guided mock interview with {result.interviewQuestions.length} tailored questions based on this report.
+          </p>
+        </div>
+        <Button
+          variant="secondary"
+          className="w-full shrink-0 sm:w-auto"
+          onClick={() =>
+            navigate("/interview", { state: { questions: result.interviewQuestions, fileName } })
           }
         >
-          <ol className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            {result.interviewQuestions.map((q, i) => (
-              <li key={i} className="flex gap-3 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
-                  {i + 1}
-                </span>
-                <span>{q}</span>
-              </li>
-            ))}
-          </ol>
-        </Card>
+          Start Mock Interview
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </Button>
       </div>
 
       <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link to="/upload">
-          <Button>Analyze Another Resume</Button>
+          <Button variant="secondary">Analyze Another Resume</Button>
         </Link>
         <Link to="/">
-          <Button variant="secondary">Back to Home</Button>
+          <Button variant="ghost">Back to Home</Button>
         </Link>
       </div>
     </div>

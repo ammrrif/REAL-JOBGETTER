@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import { useAuth } from "../context/AuthContext";
 
 const FEATURES = [
   {
@@ -56,12 +57,16 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  { step: "01", title: "Upload your resume", description: "Drop in a PDF or TXT file — we'll extract the text automatically." },
-  { step: "02", title: "Paste the job description", description: "Add the posting you're targeting so we know what to compare against." },
-  { step: "03", title: "Get instant AI insights", description: "View your match score, gaps, and interview questions in one clean report." },
+  { step: "01", title: "Create your account", description: "Sign up in seconds — no credit card, just your name and email." },
+  { step: "02", title: "Upload & paste the job", description: "Drop in your resume and the job description you're targeting." },
+  { step: "03", title: "Get instant AI insights", description: "View your match score, strengths, and skill gaps in one clean report." },
+  { step: "04", title: "Practice your interview", description: "Move into a dedicated mock interview stage built from your results." },
 ];
 
 export default function Home() {
+  const { isAuthenticated } = useAuth();
+  const primaryCtaTarget = isAuthenticated ? "/upload" : "/signup";
+
   return (
     <div className="animate-fade-in-up">
       <section className="relative overflow-hidden">
@@ -75,19 +80,23 @@ export default function Home() {
               Land your next job with a resume that actually matches
             </h1>
             <p className="mt-5 text-lg text-slate-600">
-              Upload your resume, paste a job description, and get an instant AI-style breakdown of your match score,
-              skill gaps, and interview prep — all in under a minute.
+              Create a free account, upload your resume, and get an instant AI-style breakdown of your match score,
+              skill gaps, and a guided interview practice stage — all in under a minute.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link to="/upload">
+              <Link to={primaryCtaTarget}>
                 <Button className="w-full sm:w-auto">
-                  Analyze My Resume
+                  {isAuthenticated ? "Analyze My Resume" : "Get Started Free"}
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Button>
               </Link>
-              <span className="text-sm text-slate-400">No signup required · Free demo</span>
+              {!isAuthenticated && (
+                <Link to="/login" className="text-sm font-medium text-slate-500 hover:text-slate-700">
+                  Already have an account? <span className="text-indigo-600">Log in</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -111,9 +120,9 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="text-3xl font-bold text-white">How it works</h2>
-            <p className="mt-3 text-slate-400">Three simple steps between you and your next interview.</p>
+            <p className="mt-3 text-slate-400">Four simple steps between you and your next interview.</p>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.step} className="rounded-2xl border border-white/10 bg-white/5 p-6">
                 <span className="text-3xl font-extrabold text-indigo-400">{s.step}</span>
@@ -127,10 +136,10 @@ export default function Home() {
 
       <section className="mx-auto max-w-4xl px-6 py-20 text-center">
         <h2 className="text-3xl font-bold text-slate-900">Ready to see your match score?</h2>
-        <p className="mt-3 text-slate-600">It takes less than a minute — no account needed.</p>
+        <p className="mt-3 text-slate-600">Create your free account — it takes less than a minute.</p>
         <div className="mt-8">
-          <Link to="/upload">
-            <Button>Get Started Free</Button>
+          <Link to={primaryCtaTarget}>
+            <Button>{isAuthenticated ? "Analyze My Resume" : "Get Started Free"}</Button>
           </Link>
         </div>
       </section>
